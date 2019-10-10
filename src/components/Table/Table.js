@@ -11,7 +11,7 @@ class Table extends React.Component {
     }
 
     moveUserToThisTable = () => {
-        this.props.moveUser(this.props.position)
+        this.props.moveUser(this.props.position, this.state.tableLabel)
     }
 
     render = () => {

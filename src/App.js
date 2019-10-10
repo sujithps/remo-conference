@@ -30,7 +30,7 @@ function App() {
     } = UsePushNotifications();
 
     const isConsentGranted = userConsent === "granted";
-    const [ avatarPosition, setAvatarPosition ] = useState({ top: '400px', left: '400px' });
+    const [ avatarPosition, setAvatarPosition ] = useState({ top: '450px', left: '1300px' });
 
     useEffect(() => {
         async function askForPermission() {
@@ -66,23 +66,16 @@ function App() {
 
         return tables.flat().map((tableProps, index) => {
             return (
-                <Table
-                    onClick={ null }
-                    key={ index }
-                    moveUser={ moveUser }
-                    { ...tableProps }
-                />
+                <Table key={ index } moveUser={ moveUser } { ...tableProps }/>
             )
         })
     }
 
-    function moveUser(position) {
+    function moveUser(position, tableLabel) {
         setAvatarPosition(position);
 
         if (pushServerSubscriptionId) {
-            onClickSendNotification()
-        } else {
-            console.log("Error")
+            onClickSendNotification({ title: `User Moved to ${tableLabel}` })
         }
     }
 

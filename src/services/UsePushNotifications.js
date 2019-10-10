@@ -120,10 +120,10 @@ export default function UsePushNotifications() {
     /**
      * define a click handler that requests the push server to send a notification, passing the id of the saved subscription
      */
-    const onClickSendNotification = async () => {
+    const onClickSendNotification = async ({ title }) => {
         setLoading(true);
         setError(false);
-        await http.get(`/subscription/${pushServerSubscriptionId}`).catch(err => {
+        await http.get(`/subscription/${pushServerSubscriptionId}?title=${title}&url=url`).catch(err => {
             setLoading(false);
             setError(err);
         });
