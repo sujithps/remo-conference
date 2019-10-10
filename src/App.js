@@ -14,7 +14,7 @@ export const renderHall = () => {
     const tables = Array.from({ length: totalColumns }, (cItem, cIndex) => {
         return Array.from({ length: totalRows }, (rItem, rIndex) => {
                 return {
-                    tableName: getNumberWithOrdinal((cIndex * totalRows) + rIndex + 1) + " Table",
+                    tableLabel: getNumberWithOrdinal((cIndex * totalRows) + rIndex + 1) + " Table",
                     position: {
                         top: leftStartPoint + (rIndex * tableHeight) + 'px',
                         left: topStartPoint + (cIndex * tableWidth) + 'px',
