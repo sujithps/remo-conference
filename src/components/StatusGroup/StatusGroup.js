@@ -17,14 +17,13 @@ export const StatusGroup = (props) => {
         props.setWebcamIssue()
     }
 
-
     const connectionIssueIconPosition = { top: '350px', left: '500px' }
-    const webcamIssueIconPosition = { top: '350px', left: '650px' }
+    const webcamIssueIconPosition = { top: '350px', left: '620px' }
     return (
         <div>
             <div className='Root' onClick={ setConnectionIssue }
                  style={ { top: connectionIssueIconPosition.top, left: connectionIssueIconPosition.left } }>
-                <text> Connection Issue</text>
+                <text className={ classNames('NotificationIcon', 'Right') }> Connection Issue</text>
                 <img className={ classNames('NotificationIcon', 'Left') }
                      src={ props.connectionStatus ? wifiIcon : noWifiIcon }
                      alt="connection-icon"/>
@@ -32,7 +31,7 @@ export const StatusGroup = (props) => {
 
             <div className='Root' onClick={ setWebcamIssue }
                  style={ { top: webcamIssueIconPosition.top, left: webcamIssueIconPosition.left } }>
-                <text> webCam Issue</text>
+                <text className={ classNames('NotificationIcon', 'Right') }> webCam Issue</text>
                 <img className={ classNames('NotificationIcon', 'Left') }
                      src={ props.isCannotConnectCamera ? noVideoIcon : videoIcon }
                      alt="connection-icon"/>
