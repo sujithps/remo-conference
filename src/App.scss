@@ -20,3 +20,19 @@
 .App-link {
   color: #09d3ac;
 }
+
+.Root {
+  background: rgb(226, 255, 207);
+  width: 0;
+  height: 0;
+  .ConferenceTable {
+    position: relative;
+    cursor: default;
+    transform-origin: 0px 0px 0px;
+    transform: matrix(0.5, 0, 0, 0.5, 0, 0);
+  }
+  .ConferenceImg {
+    width: 2691.87px;
+    height: 1766.5px;
+  }
+}

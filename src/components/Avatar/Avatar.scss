@@ -1,0 +1,34 @@
+.Root {
+  border-radius: 50% !important;;
+  position: absolute !important;;
+  background: none !important;
+  .AvatarImg {
+    width: 50px;
+    border-radius: 50%
+  }
+  .NotificationIcon {
+    position: absolute;
+    animation: blinker 1s linear infinite;
+    width: 20px;
+  }
+  .Right {
+    top: -20px;
+    right: -10px;
+  }
+  .Left {
+    top: -20px;
+    left: -10px;
+  }
+}
+
+.Green {
+  border: 5px solid green;
+}
+
+.Red {
+  border: 5px solid red;
+}
+
+.Yellow {
+  border: 5px solid #FE6E01;
+}
