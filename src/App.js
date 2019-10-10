@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import conferenceImg from './assets/images/conference.svg'
 import Table from './components/Table'
 import Avatar from './components/Avatar'
+import StatusGroup from './components/StatusGroup'
 import './App.scss';
 import UsePushNotifications from "./services/UsePushNotifications";
 
@@ -31,6 +32,8 @@ function App() {
 
     const isConsentGranted = userConsent === "granted";
     const [ avatarPosition, setAvatarPosition ] = useState({ top: '450px', left: '1300px' });
+    const [ connectionStatus, setConnectionStatus ] = useState(true);
+    const [ isCannotConnectCamera, setCameraStatus ] = useState(false);
 
     useEffect(() => {
         async function askForPermission() {
@@ -79,6 +82,22 @@ function App() {
         }
     }
 
+    function setWebcamIssue() {
+        setCameraStatus(!isCannotConnectCamera);
+
+        if (pushServerSubscriptionId) {
+            onClickSendNotification({ title: `User ${isCannotConnectCamera ? 'doesnt ' : ''} webcam issue` })
+        }
+    }
+
+    function setConnectionIssue() {
+        setConnectionStatus(!connectionStatus);
+
+        if (pushServerSubscriptionId) {
+            onClickSendNotification({ title: `User ${connectionStatus ? '' : 'doesnt '} have connection issue` })
+        }
+    }
+
     function getNumberWithOrdinal(n) {
         var s = [ "th", "st", "nd", "rd" ],
             v = n % 100;
@@ -95,7 +114,10 @@ function App() {
             <div className='ConferenceTable'>
                 { renderHall() }
                 <img className='ConferenceImg' src={ conferenceImg } alt="conference hall"/>
-                <Avatar position={ avatarPosition }/>
+                <Avatar position={ avatarPosition } connectionStatus={ connectionStatus }
+                        isCannotConnectCamera={ isCannotConnectCamera }/>
+
+                <StatusGroup setConnectionIssue={ setConnectionIssue } setWebcamIssue={ setWebcamIssue }/>
             </div>
         </div>
     );

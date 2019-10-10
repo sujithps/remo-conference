@@ -9,7 +9,7 @@ export const Avatar = ({ position, connectionStatus, isCannotConnectCamera }) =>
     return (
         <div className='Root' style={ { top: position.top, left: position.left } }>
             <img className='AvatarImg' src={ avatar } alt="avatar"/>
-            { connectionStatus === 'LOW' ? (
+            { !connectionStatus ? (
                 <img className={ classNames('NotificationIcon', 'Left') } src={ connectionIcon }
                      alt="connection-icon"/>) : null }
             { isCannotConnectCamera ? (
