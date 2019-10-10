@@ -4,6 +4,8 @@ import Table from './components/Table'
 import Avatar from './components/Avatar'
 import './App.scss';
 
+import Notification from './components/Notification'
+
 const leftStartPoint = 600;
 const topStartPoint = 720;
 const tableWidth = 255;
@@ -16,7 +18,7 @@ class App extends React.Component {
         super(props)
 
         this.state = {
-            avatarPosition: { top: '330px', left: '415px' }
+            avatarPosition: { top: '400px', left: '400px' }
         };
     }
 
@@ -68,6 +70,7 @@ class App extends React.Component {
                     />
                 </div>
                 <div>
+                    <Notification/>
                 </div>
             </div>
         );
