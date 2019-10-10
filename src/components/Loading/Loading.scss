@@ -1,3 +1,13 @@
-.AppLoader{
-  width: 800px !important;
+.AppLoader {
+  position: absolute !important;;
+  background: none !important;
+  z-index: 1000;
+  .Right {
+    top: -20px;
+    right: 40px !important;
+  }
+  .Left {
+    top: -20px;
+    left: -10px;
+  }
 }
