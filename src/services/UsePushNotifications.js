@@ -61,7 +61,7 @@ export default function UsePushNotifications() {
      * it uses the setUserConsent state, to set the consent of the user
      * If the user denies the consent, an error is created with the setError hook
      */
-    const onClickAskUserPermission = () => {
+    async function onClickAskUserPermission() {
         setLoading(true);
         setError(false);
         askUserPermission().then(consent => {
@@ -76,18 +76,19 @@ export default function UsePushNotifications() {
             setLoading(false);
         });
     };
+
     //
 
     /**
      * define a click handler that creates a push notification subscription.
      * Once the subscription is created, it uses the setUserSubscription hook
      */
-    const onClickSubscribeToPushNotification = () => {
+    async function onClickSubscribeToPushNotification() {
         setLoading(true);
         setError(false);
         createNotificationSubscription()
-            .then(function (subscrition) {
-                setUserSubscription(subscrition);
+            .then(function (subscription) {
+                setUserSubscription(subscription);
                 setLoading(false);
             })
             .catch(err => {
@@ -101,7 +102,7 @@ export default function UsePushNotifications() {
      * define a click handler that sends the push susbcribtion to the push server.
      * Once the subscription ics created on the server, it saves the id using the hook setPushServerSubscriptionId
      */
-    const onClickSendSubscriptionToPushServer = () => {
+    async function onClickSendSubscriptionToPushServer() {
         setLoading(true);
         setError(false);
         http

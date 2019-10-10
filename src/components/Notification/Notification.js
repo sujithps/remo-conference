@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UsePushNotifications from "../../services/UsePushNotifications";
 import './Notification.scss';
 
 const Loading = ({ loading }) => (loading ?
-    <div className="AppLoader">Please wait, we are loading something...</div> : null);
+    <div className="AppLoader">Please wait, checking for notification support...</div> : null);
 const Error = ({ error }) =>
     error ? (
         <section className="app-error">
@@ -27,10 +27,28 @@ export default function Notification() {
         loading
     } = UsePushNotifications();
 
+    useEffect(() => {
+        async function askForPermission() {
+            if (!isConsentGranted) {
+                await onClickAskUserPermission();
+            }
+
+            if (pushNotificationSupported && isConsentGranted && !userSubscription) {
+                await onClickSubscribeToPushNotification()
+            }
+
+            if (userSubscription && !pushServerSubscriptionId) {
+                await onClickSendSubscriptionToPushServer()
+            }
+        }
+
+        askForPermission();
+    });
+
     const isConsentGranted = userConsent === "granted";
 
     return (
-        <main>
+        <div>
             <Loading loading={ loading }/>
 
             <p>Push notification are { !pushNotificationSupported && "NOT" } supported by your device.</p>
@@ -41,21 +59,6 @@ export default function Notification() {
 
             <Error error={ error }/>
 
-            <button disabled={ !pushNotificationSupported || isConsentGranted }
-                    onClick={ onClickAskUserPermission }>
-                { isConsentGranted ? "Consent granted" : " Ask user permission" }
-            </button>
-
-            <button disabled={ !pushNotificationSupported || !isConsentGranted || userSubscription }
-                    onClick={ onClickSubscribeToPushNotification }>
-                { userSubscription ? "Push subscription created" : "Create Notification subscription" }
-            </button>
-
-            <button disabled={ !userSubscription || pushServerSubscriptionId }
-                    onClick={ onClickSendSubscriptionToPushServer }>
-                { pushServerSubscriptionId ? "Subscription sent to the server" : "Send subscription to push server" }
-            </button>
-
             { pushServerSubscriptionId && (
                 <div>
                     <p>The server accepted the push subscription!</p>
@@ -63,12 +66,6 @@ export default function Notification() {
                 </div>
             ) }
 
-            <section>
-                <h4>Your notification subscription details</h4>
-                <pre>
-          <code>{ JSON.stringify(userSubscription, null, " ") }</code>
-        </pre>
-            </section>
-        </main>
+        </div>
     );
 }

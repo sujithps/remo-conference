@@ -62,15 +62,13 @@ class App extends React.Component {
     render() {
         return (
             <div className='Root'>
+                <Notification/>
                 <div className='ConferenceTable'>
                     { this.renderHall() }
                     <img className='ConferenceImg' src={ conferenceImg } alt="conference hall"/>
                     <Avatar
                         position={ this.state.avatarPosition }
                     />
-                </div>
-                <div>
-                    <Notification/>
                 </div>
             </div>
         );
