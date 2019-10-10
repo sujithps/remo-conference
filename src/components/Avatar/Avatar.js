@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
-import connectionIcon from '../../assets/images/connectionIcon.svg'
+import wifiIcon from '../../assets/images/wifi.png'
 import avatar from '../../assets/images/avatar.svg'
-import cameraIcon from '../../assets/images/cameraIcon.svg'
+import cameraIcon from '../../assets/images/no-video.png'
 import './Avatar.scss'
 
 export const Avatar = ({ position, connectionStatus, isCannotConnectCamera }) => {
@@ -10,7 +10,7 @@ export const Avatar = ({ position, connectionStatus, isCannotConnectCamera }) =>
         <div className='Root' style={ { top: position.top, left: position.left } }>
             <img className='AvatarImg' src={ avatar } alt="avatar"/>
             { !connectionStatus ? (
-                <img className={ classNames('NotificationIcon', 'Left') } src={ connectionIcon }
+                <img className={ classNames('NotificationIcon', 'Left') } src={ wifiIcon }
                      alt="connection-icon"/>) : null }
             { isCannotConnectCamera ? (
                 <img className={ classNames('NotificationIcon', 'Right') } src={ cameraIcon }

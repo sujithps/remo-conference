@@ -1,7 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
-import connectionIcon from '../../assets/images/connectionIcon.svg'
-import cameraIcon from '../../assets/images/cameraIcon.svg'
+import wifiIcon from '../../assets/images/wifi.png'
+import noWifiIcon from '../../assets/images/no-wifi.png'
+import noVideoIcon from '../../assets/images/no-video.png'
+import videoIcon from '../../assets/images/video.png'
 
 import './StatusGroup.scss'
 
@@ -23,14 +25,16 @@ export const StatusGroup = (props) => {
             <div className='Root' onClick={ setConnectionIssue }
                  style={ { top: connectionIssueIconPosition.top, left: connectionIssueIconPosition.left } }>
                 <text> Connection Issue</text>
-                <img className={ classNames('NotificationIcon', 'Left') } src={ connectionIcon }
+                <img className={ classNames('NotificationIcon', 'Left') }
+                     src={ props.connectionStatus ? wifiIcon : noWifiIcon }
                      alt="connection-icon"/>
             </div>
 
             <div className='Root' onClick={ setWebcamIssue }
                  style={ { top: webcamIssueIconPosition.top, left: webcamIssueIconPosition.left } }>
                 <text> webCam Issue</text>
-                <img className={ classNames('NotificationIcon', 'Left') } src={ cameraIcon }
+                <img className={ classNames('NotificationIcon', 'Left') }
+                     src={ props.isCannotConnectCamera ? noVideoIcon : videoIcon }
                      alt="connection-icon"/>
             </div>
         </div>

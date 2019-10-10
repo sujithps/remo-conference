@@ -117,7 +117,8 @@ function App() {
                 <Avatar position={ avatarPosition } connectionStatus={ connectionStatus }
                         isCannotConnectCamera={ isCannotConnectCamera }/>
 
-                <StatusGroup setConnectionIssue={ setConnectionIssue } setWebcamIssue={ setWebcamIssue }/>
+                <StatusGroup setConnectionIssue={ setConnectionIssue } setWebcamIssue={ setWebcamIssue }
+                             isCannotConnectCamera={ isCannotConnectCamera } connectionStatus={ connectionStatus }/>
             </div>
         </div>
     );
