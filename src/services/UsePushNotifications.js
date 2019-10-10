@@ -14,7 +14,7 @@ const pushNotificationSupported = isPushNotificationSupported();
 
 export default function UsePushNotifications() {
     const [ userConsent, setUserConsent ] = useState(Notification.permission);
-    //to manage the user consent: Notification.permission is a JavaScript native function that return the current state of the permission
+    //to manage the user consent: NotificationStatus.permission is a JavaScript native function that return the current state of the permission
     //We initialize the userConsent with that value
     const [ userSubscription, setUserSubscription ] = useState(null);
     //to manage the use push notification subscription

@@ -17,7 +17,7 @@ function receivePushNotification(event) {
 }
 
 function openPushNotification(event) {
-    console.log("[Service Worker] Notification click Received.", event.notification.data);
+    console.log("[Service Worker] NotificationStatus click Received.", event.notification.data);
 
     event.notification.close();
     event.waitUntil(clients.openWindow(event.notification.data));

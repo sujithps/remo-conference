@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import conferenceImg from './assets/images/conference.svg'
 import Table from './components/Table'
 import Avatar from './components/Avatar'
 import './App.scss';
+import UsePushNotifications from "./services/UsePushNotifications";
 
-import Notification from './components/Notification'
+
+import NotificationStatus from './components/NotificationStatus'
 
 const leftStartPoint = 600;
 const topStartPoint = 720;
@@ -13,20 +15,46 @@ const tableHeight = 255;
 const totalColumns = 5;
 const totalRows = 3;
 
-class App extends React.Component {
-    constructor(props) {
-        super(props)
+function App() {
+    const {
+        userConsent,
+        pushNotificationSupported,
+        userSubscription,
+        onClickAskUserPermission,
+        onClickSubscribeToPushNotification,
+        onClickSendSubscriptionToPushServer,
+        pushServerSubscriptionId,
+        onClickSendNotification,
+        error,
+        loading
+    } = UsePushNotifications();
 
-        this.state = {
-            avatarPosition: { top: '400px', left: '400px' }
-        };
-    }
+    const isConsentGranted = userConsent === "granted";
+    const [ avatarPosition, setAvatarPosition ] = useState({ top: '400px', left: '400px' });
 
-    renderHall = () => {
+    useEffect(() => {
+        async function askForPermission() {
+            if (!isConsentGranted) {
+                await onClickAskUserPermission();
+            }
+
+            if (pushNotificationSupported && isConsentGranted && !userSubscription) {
+                await onClickSubscribeToPushNotification()
+            }
+
+            if (userSubscription && !pushServerSubscriptionId) {
+                await onClickSendSubscriptionToPushServer()
+            }
+        }
+
+        askForPermission();
+    });
+
+    function renderHall() {
         const tables = Array.from({ length: totalColumns }, (cItem, cIndex) => {
             return Array.from({ length: totalRows }, (rItem, rIndex) => {
                     return {
-                        tableLabel: this.getNumberWithOrdinal((cIndex * totalRows) + rIndex + 1) + " Table",
+                        tableLabel: getNumberWithOrdinal((cIndex * totalRows) + rIndex + 1) + " Table",
                         position: {
                             top: leftStartPoint + (rIndex * tableHeight) + 'px',
                             left: topStartPoint + (cIndex * tableWidth) + 'px',
@@ -41,38 +69,43 @@ class App extends React.Component {
                 <Table
                     onClick={ null }
                     key={ index }
-                    moveUser={ this.moveUser }
+                    moveUser={ moveUser }
                     { ...tableProps }
                 />
             )
         })
     }
 
-    moveUser = (position) => {
-        this.setState({ avatarPosition: position })
+    function moveUser(position) {
+        setAvatarPosition(position);
+
+        if (pushServerSubscriptionId) {
+            onClickSendNotification()
+        } else {
+            console.log("Error")
+        }
     }
 
-
-    getNumberWithOrdinal = (n) => {
+    function getNumberWithOrdinal(n) {
         var s = [ "th", "st", "nd", "rd" ],
             v = n % 100;
         return n + (s[ (v - 20) % 10 ] || s[ v ] || s[ 0 ]);
     }
 
-    render() {
-        return (
-            <div className='Root'>
-                <Notification/>
-                <div className='ConferenceTable'>
-                    { this.renderHall() }
-                    <img className='ConferenceImg' src={ conferenceImg } alt="conference hall"/>
-                    <Avatar
-                        position={ this.state.avatarPosition }
-                    />
-                </div>
+    return (
+        <div className='Root'>
+            <NotificationStatus loading={ loading }
+                                pushNotificationSupported={ pushNotificationSupported }
+                                userConsent={ userConsent }
+                                error={ error }/>
+
+            <div className='ConferenceTable'>
+                { renderHall() }
+                <img className='ConferenceImg' src={ conferenceImg } alt="conference hall"/>
+                <Avatar position={ avatarPosition }/>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default App;
