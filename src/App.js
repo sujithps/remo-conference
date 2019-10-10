@@ -1,6 +1,7 @@
 import React from 'react'
 import conferenceImg from './assets/images/conference.svg'
 import Table from './components/Table'
+import Avatar from './components/Avatar'
 import './App.scss';
 
 export const renderHall = () => {
@@ -43,11 +44,16 @@ function getNumberWithOrdinal(n) {
 }
 
 export const App = () => {
+    const [ userPosition, setUserPosition ] = React.useState({ top: '330px', left: '415px' })
+
     return (
         <div className='Root'>
             <div className='ConferenceTable'>
                 { renderHall() }
                 <img className='ConferenceImg' src={ conferenceImg } alt="conference hall"/>
+                <Avatar
+                    position={ { top: userPosition.top, left: userPosition.left } }
+                />
             </div>
             <div>
             </div>

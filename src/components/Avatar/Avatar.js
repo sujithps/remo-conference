@@ -17,6 +17,6 @@ export const Avatar = ({ position, connectionStatus, isCannotConnectCamera }) =>
                      alt="camera-icon"/>) : null }
         </div>
     )
-}
+};
 
 export default Avatar
